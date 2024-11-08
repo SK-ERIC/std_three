@@ -1,7 +1,4 @@
 import * as THREE from "three";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import * as dat from "dat.gui";
-
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(
@@ -10,45 +7,16 @@ const camera = new THREE.PerspectiveCamera(
   0.1,
   1000
 );
-
 camera.position.set(0, 0, 10);
 scene.add(camera);
 
-const geometry = new THREE.BufferGeometry();
-const vertices = new Float32Array([
-  -1.0, -1.0, 1.0, 1.0, -1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, -1.0, 1.0, 1.0,
-  -1.0, -1.0, 1.0,
-]);
-
-geometry.setAttribute("position", new THREE.BufferAttribute(vertices, 3));
-
-const material = new THREE.MeshBasicMaterial({ color: 0xffff00 });
-const mesh = new THREE.Mesh(geometry, material);
-console.log(mesh);
-scene.add(mesh);
+const cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
+const cubeMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+scene.add(cube);
 
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
+
 document.body.appendChild(renderer.domElement);
-
-// 创建轨道控制器
-const controls = new OrbitControls(camera, renderer.domElement);
-controls.enableDamping = true;
-
-const axesHelper = new THREE.AxesHelper(5);
-scene.add(axesHelper);
-
-function render() {
-  controls.update();
-  renderer.render(scene, camera);
-  requestAnimationFrame(render);
-}
-
-render();
-
-window.addEventListener("resize", () => {
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setPixelRatio(window.devicePixelRatio);
-});
+renderer.render(scene, camera);

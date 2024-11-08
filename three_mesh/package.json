@@ -1,17 +1,18 @@
 {
-  "name": "three_mesh",
-  "version": "1.0.0",
-  "main": "index.js",
+  "name": "three_mesh_1",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
   "scripts": {
-    "dev": "parcel src/index.html",
-    "build": "parcel build src/index.html"
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
   "devDependencies": {
-    "parcel": "^2.12.0"
+    "@types/dat.gui": "^0.7.13",
+    "@types/three": "^0.169.0",
+    "typescript": "~5.6.2",
+    "vite": "^5.4.10"
   },
   "dependencies": {
     "dat.gui": "^0.7.9",

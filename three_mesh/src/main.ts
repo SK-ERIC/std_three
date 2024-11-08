@@ -1,9 +1,8 @@
 import * as THREE from "three";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import * as dat from "dat.gui";
-
+import { OrbitControls } from "three/examples/jsm/Addons.js";
 
 const scene = new THREE.Scene();
+
 const camera = new THREE.PerspectiveCamera(
   75,
   window.innerWidth / window.innerHeight,
@@ -14,24 +13,29 @@ const camera = new THREE.PerspectiveCamera(
 camera.position.set(0, 0, 10);
 scene.add(camera);
 
-const geometry = new THREE.BufferGeometry();
-const vertices = new Float32Array([
-  -1.0, -1.0, 1.0, 1.0, -1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, -1.0, 1.0, 1.0,
-  -1.0, -1.0, 1.0,
-]);
+const textureLoader = new THREE.TextureLoader();
+const texture = textureLoader.load("./textures/minecraft.png");
 
-geometry.setAttribute("position", new THREE.BufferAttribute(vertices, 3));
+// texture纹理显示设置
+texture.minFilter = THREE.NearestFilter;
+texture.magFilter = THREE.NearestFilter;
+// texture.minFilter = THREE.LinearFilter;
+// texture.magFilter = THREE.LinearFilter;
 
-const material = new THREE.MeshBasicMaterial({ color: 0xffff00 });
-const mesh = new THREE.Mesh(geometry, material);
-console.log(mesh);
-scene.add(mesh);
+// 添加物体
+const cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
+// 材质
+const basicMaterial = new THREE.MeshBasicMaterial({
+  color: "#ffff00",
+  map: texture,
+});
+const cube = new THREE.Mesh(cubeGeometry, basicMaterial);
+scene.add(cube);
 
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
-// 创建轨道控制器
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
 

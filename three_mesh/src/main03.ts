@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
 const scene = new THREE.Scene();
 
@@ -16,7 +16,7 @@ scene.add(camera);
 const textureLoader = new THREE.TextureLoader();
 const doorColorTexture = textureLoader.load("./textures/door/color.jpg");
 
-const cubeGeometry = new THREE.BoxBufferGeometry(1, 1, 1);
+const cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
 const basicMaterial = new THREE.MeshBasicMaterial({
   color: "#ffff00",
   map: doorColorTexture,

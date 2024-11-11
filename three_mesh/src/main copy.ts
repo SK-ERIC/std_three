@@ -24,6 +24,7 @@ const basicMaterial = new THREE.MeshBasicMaterial({
   color: "#ffff00",
   map: doorColorTexture,
   alphaMap: doorAlphaTexture,
+  transparent: true,
 });
 const cube = new THREE.Mesh(cubeGeometry, basicMaterial);
 scene.add(cube);

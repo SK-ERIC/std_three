@@ -41,33 +41,33 @@ scene.add(plane);
 // 环境光
 const light = new THREE.AmbientLight(0xffffff, 0.5);
 scene.add(light);
-// 直线光
-const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
-directionalLight.position.set(5, 5, 5);
-directionalLight.castShadow = true;
+
+const spotLight = new THREE.SpotLight(0xffffff, 1);
+spotLight.position.set(5, 5, 5);
+spotLight.castShadow = true;
+spotLight.intensity = 2;
 
 // 设置阴影贴图模糊度
-directionalLight.shadow.radius = 20;
+spotLight.shadow.radius = 20;
 // 设置阴影贴图的分辨率
-directionalLight.shadow.mapSize.set(4096, 4096);
+spotLight.shadow.mapSize.set(512, 512);
 
-// 设置平行光投射相机的属性
-directionalLight.shadow.camera.near = 0.5;
-directionalLight.shadow.camera.far = 500;
-directionalLight.shadow.camera.top = 5;
-directionalLight.shadow.camera.bottom = -5;
-directionalLight.shadow.camera.left = -5;
-directionalLight.shadow.camera.right = 5;
+spotLight.target = sphere;
+spotLight.angle = Math.PI / 6;
+spotLight.distance = 0;
+spotLight.penumbra = 0;
+spotLight.decay = 0;
 
-scene.add(directionalLight);
+scene.add(spotLight);
+gui.add(sphere.position, "x").min(-5).max(5).step(0.1);
 gui
-  .add(directionalLight.shadow.camera, "near")
+  .add(spotLight, "angle")
   .min(0)
-  .max(10)
-  .step(0.1)
-  .onChange(() => {
-    directionalLight.shadow.camera.updateProjectionMatrix();
-  });
+  .max(Math.PI / 2)
+  .step(0.01);
+gui.add(spotLight, "distance").min(0).max(10).step(0.01);
+gui.add(spotLight, "penumbra").min(0).max(1).step(0.01);
+gui.add(spotLight, "decay").min(0).max(5).step(0.01);
 
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
